@@ -1,0 +1,128 @@
+// TekRest store settings and product list.
+// Edit this file to change contact details, prices or products. No other file needs to change.
+
+const STORE = {
+  name: "TekRest",
+  // WhatsApp number in international format, digits only (e.g. "2348012345678").
+  // Leave empty and orders will go to the email address below instead.
+  whatsapp: "2348086033840",
+  email: "tekrest0@gmail.com",
+  instagram: "tekrest0",
+  tiktok: "tekrest5",
+  currency: "₦",
+};
+
+// Selling prices in naira. These are set automatically by pricing/update_prices.py,
+// so change the markup there rather than editing prices here.
+const PRODUCTS = [
+  {
+    id: "gaming-desk-rgb",
+    name: "RGB Gaming Desk",
+    category: "gaming",
+    price: 210000,
+    image: "assets/img/gaming-desk-rgb.jpg",
+    alt: "Black gaming desk with RGB edge lighting and X-shaped legs",
+    blurb: "Carbon-texture top with RGB edge lighting that changes colour by remote.",
+    features: ["RGB lighting with remote", "Headphone hook and cup holder", "Cable holes on the desktop"],
+  },
+  {
+    id: "gaming-chair-white",
+    name: "Gaming Chair, Black & White",
+    category: "gaming",
+    price: 260000,
+    image: "assets/img/gaming-chair-white.jpg",
+    alt: "Black and white reclining gaming chair beside a gaming desk",
+    blurb: "Racing-style swivel chair with head and lower-back pillows.",
+    features: ["Reclining backrest", "Head and lumbar pillows", "Adjustable armrests"],
+  },
+  {
+    id: "gaming-chair-black",
+    name: "Gaming Chair with Footrest",
+    category: "gaming",
+    price: 260000,
+    image: "assets/img/gaming-chair-black.jpg",
+    alt: "All-black gaming chair with pull-out footrest next to an RGB desk",
+    blurb: "All-black swivel gaming chair with a pull-out footrest for long sessions.",
+    features: ["Pull-out footrest", "Reclining backrest", "Head and lumbar pillows"],
+  },
+  {
+    id: "standing-desk",
+    name: "Electric Standing Desk",
+    category: "desks",
+    price: 315000,
+    image: "assets/img/standing-desk-white.jpg",
+    alt: "White electric height-adjustable desk with control panel",
+    blurb: "Motorised desk that moves between sitting and standing at the press of a button.",
+    features: ["Electric height adjustment", "Control panel with memory buttons", "Available in black or white"],
+  },
+  {
+    id: "l-desk",
+    name: "L-Shaped Electric Standing Desk",
+    category: "desks",
+    price: 365000,
+    image: "assets/img/l-desk.jpg",
+    alt: "Wood-finish L-shaped electric standing desk",
+    blurb: "Corner desk in a wood finish with electric height adjustment. Room for two screens and then some.",
+    features: ["L-shaped corner layout", "Electric height adjustment", "Wood-finish top"],
+  },
+  {
+    id: "ergo-chair-white",
+    name: "Ergonomic Mesh Chair, White Frame",
+    category: "office",
+    price: 235000,
+    image: "assets/img/ergo-chair-white.jpg",
+    alt: "White-frame ergonomic mesh office chair with headrest",
+    blurb: "Breathable mesh back with an adjustable headrest and flip-up arms.",
+    features: ["Adjustable headrest", "Flip-up armrests", "Built-in lumbar support"],
+  },
+  {
+    id: "executive-chair",
+    name: "Executive Swivel Chair",
+    category: "office",
+    price: 290000,
+    image: "assets/img/executive-chair.jpg",
+    alt: "High-back black executive office chair",
+    blurb: "High-back padded chair with a chrome base, built for long days at a desk.",
+    features: ["High padded back", "Chrome five-star base", "Smooth swivel and tilt"],
+  },
+  {
+    id: "mesh-chair-black",
+    name: "Ergonomic Mesh Chair, Black",
+    category: "office",
+    price: 200000,
+    image: "assets/img/mesh-chair-black.jpg",
+    alt: "Black ergonomic mesh office chair",
+    blurb: "Everyday mesh office chair with a supportive curved back.",
+    features: ["Mesh back that stays cool", "Adjustable armrests", "Height adjustable"],
+  },
+  {
+    id: "foldable-table",
+    name: "Foldable Office Table",
+    category: "desks",
+    price: 275000,
+    image: "assets/img/foldable-table.jpg",
+    alt: "Foldable office table on wheels with a vented front panel",
+    blurb: "Folds flat when you need the space back, and rolls on lockable wheels.",
+    features: ["Folding frame", "Rolls on wheels", "Front modesty panel"],
+  },
+];
+
+// Setups are two products sold together. Price is the sum of both unless you set a custom price.
+const SETUPS = [
+  {
+    id: "setup-gaming",
+    name: "The Gaming Setup",
+    items: ["gaming-desk-rgb", "gaming-chair-white"],
+    image: "assets/img/gaming-setup.jpg",
+    alt: "RGB gaming desk with black and white gaming chair",
+    blurb: "RGB gaming desk and reclining gaming chair. Everything you need for a proper battle station.",
+  },
+  {
+    id: "setup-wfh",
+    name: "The Work-From-Home Setup",
+    items: ["standing-desk", "ergo-chair-white"],
+    image: "assets/img/standing-desk-black.jpg",
+    alt: "Black electric standing desk with white ergonomic chair",
+    blurb: "Electric standing desk and ergonomic mesh chair. Sit, stand, and stop the back pain.",
+  },
+];
