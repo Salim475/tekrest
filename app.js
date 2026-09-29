@@ -2,7 +2,6 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const byId = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
-  const CATEGORY_LABEL = { gaming: "Gaming", office: "Office chair", desks: "Desk" };
 
   const money = (n) => STORE.currency + Number(n).toLocaleString("en-NG");
   const setupPrice = (s) => s.price ?? s.items.reduce((sum, id) => sum + byId[id].price, 0);
@@ -32,58 +31,54 @@
 
   const cartTotal = () => cart.reduce((sum, l) => sum + byId[l.id].price * l.qty, 0);
 
-  // ---------- Products ----------
+  // ---------- Catalogue ----------
   function renderProducts(filter = "all") {
-    const grid = $("#productGrid");
-    grid.innerHTML = PRODUCTS.filter((p) => filter === "all" || p.category === filter)
+    $("#productGrid").innerHTML = PRODUCTS.filter((p) => filter === "all" || p.category === filter)
       .map((p) => `
-        <article class="card">
-          <div class="card-img">
+        <article class="product">
+          <div class="product-media">
             <img src="${p.image}" alt="${p.alt}" loading="lazy">
-            <span class="card-cat">${CATEGORY_LABEL[p.category]}</span>
+            <span class="product-code mono">${p.code}</span>
+            <button class="quick-add" data-add="${p.id}">Add to order</button>
           </div>
-          <div class="card-body">
-            <h3>${p.name}</h3>
-            <p>${p.blurb}</p>
-            <ul class="features">${p.features.map((f) => `<li>${f}</li>`).join("")}</ul>
-            <div class="card-foot">
+          <div class="product-info">
+            <div class="product-title">
+              <h3>${p.name}</h3>
               <span class="price">${money(p.price)}</span>
-              <button class="add-btn" data-add="${p.id}">Add to order</button>
             </div>
+            <p>${p.blurb}</p>
+            <ul class="specs">${p.features.map((f, i) => `<li><span class="mono">0${i + 1}</span>${f}</li>`).join("")}</ul>
+            <button class="btn btn-ink btn-block add-mobile" data-add="${p.id}">Add to order</button>
           </div>
         </article>`)
       .join("");
   }
 
   function setFilter(filter) {
-    $$(".chip").forEach((c) => {
-      const on = c.dataset.filter === filter;
-      c.classList.toggle("is-active", on);
-      c.setAttribute("aria-selected", on);
+    $$(".tab").forEach((t) => {
+      const on = t.dataset.filter === filter;
+      t.classList.toggle("is-active", on);
+      t.setAttribute("aria-selected", on);
     });
     renderProducts(filter);
   }
 
   // ---------- Setups ----------
   function renderSetups() {
-    $("#setupGrid").innerHTML = SETUPS.map((s) => `
+    $("#setupGrid").innerHTML = SETUPS.map((s, i) => `
       <article class="setup">
-        <img src="${s.image}" alt="${s.alt}" loading="lazy">
+        <div class="setup-media"><img src="${s.image}" alt="${s.alt}" loading="lazy"></div>
         <div class="setup-body">
+          <span class="mono">Setup 0${i + 1}</span>
           <h3>${s.name}</h3>
           <p>${s.blurb}</p>
-          <ul class="setup-items">
+          <ul class="equation">
             ${s.items.map((id) => `<li><span>${byId[id].name}</span><span>${money(byId[id].price)}</span></li>`).join("")}
+            <li class="total"><span>Together</span><span>${money(setupPrice(s))}</span></li>
           </ul>
-          <div class="setup-foot">
-            <span class="price">${money(setupPrice(s))}</span>
-            <button class="btn btn-primary" data-setup="${s.id}">Add both to order</button>
-          </div>
+          <button class="btn btn-signal" data-setup="${s.id}">Add the setup <span aria-hidden="true">→</span></button>
         </div>
       </article>`).join("");
-
-    const gaming = SETUPS.find((s) => s.id === "setup-gaming");
-    if (gaming) $("#heroPrice").textContent = money(setupPrice(gaming));
   }
 
   // ---------- Drawer ----------
@@ -105,8 +100,7 @@
   }
 
   function renderCart() {
-    const count = cart.reduce((n, l) => n + l.qty, 0);
-    $("#cartCount").textContent = count;
+    $("#cartCount").textContent = cart.reduce((n, l) => n + l.qty, 0);
     $("#cartEmpty").hidden = cart.length > 0;
     $("#orderForm").hidden = cart.length === 0;
     $("#sendOrder").disabled = cart.length === 0;
@@ -115,13 +109,14 @@
     $("#cartList").innerHTML = cart.map((l) => {
       const p = byId[l.id];
       return `
-        <li class="cart-item">
+        <li class="line">
           <img src="${p.image}" alt="">
           <div>
+            <span class="mono">${p.code}</span>
             <h4>${p.name}</h4>
-            <span class="muted">${money(p.price)}</span>
+            <div class="line-price">${money(p.price * l.qty)}</div>
           </div>
-          <div class="qty" aria-label="Quantity for ${p.name}">
+          <div class="stepper" aria-label="Quantity for ${p.name}">
             <button data-qty="${l.id}" data-delta="-1" aria-label="Remove one">−</button>
             <span>${l.qty}</span>
             <button data-qty="${l.id}" data-delta="1" aria-label="Add one">+</button>
@@ -132,7 +127,7 @@
 
   // ---------- Sending the order ----------
   function buildMessage(form) {
-    const lines = cart.map((l) => `- ${l.qty} x ${byId[l.id].name} (${money(byId[l.id].price * l.qty)})`);
+    const lines = cart.map((l) => `- ${l.qty} x ${byId[l.id].name} [${byId[l.id].code}] (${money(byId[l.id].price * l.qty)})`);
     const note = form.note.value.trim();
     return [
       `Hello ${STORE.name}, I'd like to order:`,
@@ -177,20 +172,35 @@
     toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
   }
 
-  function renderContact() {
+  function renderStatic() {
     const links = [];
     if (STORE.whatsapp) links.push(`<li><a href="https://wa.me/${STORE.whatsapp}" target="_blank" rel="noopener">WhatsApp</a></li>`);
     links.push(`<li><a href="mailto:${STORE.email}">${STORE.email}</a></li>`);
-    links.push(`<li><a href="https://instagram.com/${STORE.instagram}" target="_blank" rel="noopener">Instagram @${STORE.instagram}</a></li>`);
-    links.push(`<li><a href="https://tiktok.com/@${STORE.tiktok}" target="_blank" rel="noopener">TikTok @${STORE.tiktok}</a></li>`);
+    links.push(`<li><a href="https://instagram.com/${STORE.instagram}" target="_blank" rel="noopener">Instagram</a></li>`);
+    links.push(`<li><a href="https://tiktok.com/@${STORE.tiktok}" target="_blank" rel="noopener">TikTok</a></li>`);
     $("#contactLinks").innerHTML = links.join("");
-    $("#notifyBtn").href = contactUrl("Hi TekRest, please let me know when massage chairs are available.", "Massage chairs");
+
+    const hello = contactUrl("Hi TekRest, I have a question about your chairs and desks.", "Question for TekRest");
+    ["#heroChat", "#ctaChat", "#waFloat"].forEach((sel) => {
+      const a = $(sel);
+      a.href = hello;
+      a.target = "_blank";
+      a.rel = "noopener";
+    });
+    const notify = $("#notifyBtn");
+    notify.href = contactUrl("Hi TekRest, please let me know when massage chairs are available.", "Massage chairs");
+    notify.target = "_blank";
+    notify.rel = "noopener";
+
+    const heroProduct = byId["ergo-chair-white"];
+    if (heroProduct) $("#heroPrice").textContent = money(heroProduct.price);
+    $("#factCount").textContent = PRODUCTS.length;
     $("#year").textContent = new Date().getFullYear();
   }
 
   // Play videos only while they're on screen.
   function setupVideos() {
-    const vids = $$(".videos video");
+    const vids = $$(".reel video");
     if (!("IntersectionObserver" in window)) { vids.forEach((v) => v.setAttribute("controls", "")); return; }
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause(); });
@@ -202,10 +212,11 @@
   document.addEventListener("click", (e) => {
     const add = e.target.closest("[data-add]");
     if (add) {
+      const label = add.textContent;
       addToCart(add.dataset.add);
       add.textContent = "Added ✓";
       add.classList.add("added");
-      setTimeout(() => { add.textContent = "Add to order"; add.classList.remove("added"); }, 1400);
+      setTimeout(() => { add.textContent = label; add.classList.remove("added"); }, 1400);
       toast(`${byId[add.dataset.add].name} added to your order`);
       return;
     }
@@ -222,8 +233,8 @@
       setQty(q.dataset.qty, line.qty + Number(q.dataset.delta));
       return;
     }
-    const chip = e.target.closest(".chip");
-    if (chip) { setFilter(chip.dataset.filter); return; }
+    const tab = e.target.closest(".tab");
+    if (tab) { setFilter(tab.dataset.filter); return; }
     const jump = e.target.closest("[data-jump]");
     if (jump) setFilter(jump.dataset.jump);
   });
@@ -238,6 +249,6 @@
   renderProducts();
   renderSetups();
   renderCart();
-  renderContact();
+  renderStatic();
   setupVideos();
 })();

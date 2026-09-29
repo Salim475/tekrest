@@ -5,255 +5,267 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TekRest | Gaming Chairs, Standing Desks & Office Chairs</title>
   <meta name="description" content="Gaming chairs, electric standing desks and ergonomic office chairs for people who spend their day at a desk. Brand new, imported, and you pay on delivery.">
-  <meta property="og:title" content="TekRest | Chairs and desks for your setup">
+  <meta property="og:title" content="TekRest | Built for the hours you put in">
   <meta property="og:description" content="Gaming chairs, standing desks and ergonomic office chairs. Pay on delivery.">
-  <meta property="og:image" content="assets/img/gaming-setup.jpg">
+  <meta property="og:image" content="assets/img/ergo-chair-white.jpg">
+  <meta name="theme-color" content="#f3f0ea">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="#top" class="logo" aria-label="TekRest home">
-      <span class="logo-mark" aria-hidden="true"></span>
-      <span>Tek<b>Rest</b></span>
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <span>Pay on delivery</span>
+    <span class="sep">/</span>
+    <span>Brand new &amp; imported</span>
+    <span class="sep hide-sm">/</span>
+    <span class="hide-sm">Order on WhatsApp</span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="wrap header-inner">
+    <a href="#top" class="brand" aria-label="TekRest home">
+      <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 9h14M14 9v12" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/><circle cx="21" cy="21" r="2.2" fill="var(--signal)"/></svg>
+      <span class="brand-word">TekRest</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#shop">Shop</a>
+      <a href="#catalogue">Catalogue</a>
       <a href="#setups">Setups</a>
-      <a href="#how">How to order</a>
+      <a href="#process">Ordering</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <button class="cart-btn" id="cartOpen" aria-label="Open your order">
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 4h2l2.4 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4L21 8H6.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
-      <span>Order</span>
-      <span class="cart-count" id="cartCount">0</span>
+    <button class="order-btn" id="cartOpen" aria-label="Open your order">
+      Your order <span class="order-count" id="cartCount">0</span>
     </button>
   </div>
 </header>
 
 <main id="top">
 
+  <!-- Hero -->
   <section class="hero">
-    <div class="container hero-grid">
+    <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Gaming · Office · Work from home</p>
-        <h1>Chairs and desks for people who live at their setup.</h1>
-        <p class="lead">Gaming chairs, electric standing desks and ergonomic office chairs. Brand new, imported, and delivered to your door. You pay when it arrives.</p>
-        <div class="hero-actions">
-          <a href="#shop" class="btn btn-primary">Shop the range</a>
-          <a href="#setups" class="btn btn-ghost">See full setups</a>
-        </div>
-        <ul class="trust">
-          <li><span class="dot"></span>Pay on delivery</li>
-          <li><span class="dot"></span>Brand new &amp; imported</li>
-          <li><span class="dot"></span>Real photos, not stock</li>
-        </ul>
-      </div>
-      <div class="hero-media">
-        <img src="assets/img/gaming-setup.jpg" alt="Black and white gaming chair next to an RGB gaming desk" width="643" height="804">
-        <div class="hero-tag">
-          <span>Gaming Setup</span>
-          <strong id="heroPrice"></strong>
+        <p class="mono label">Seating &amp; desks · Est. 2026</p>
+        <h1>Built for the <em>hours</em> you put in.</h1>
+        <p class="hero-lead">Ergonomic chairs, gaming setups and electric standing desks for people who work, study and play at a screen. Everything is brand new, and you only pay once it's at your door.</p>
+        <div class="hero-cta">
+          <a href="#catalogue" class="btn btn-ink">Browse the catalogue <span aria-hidden="true">→</span></a>
+          <a href="#" class="btn btn-line" id="heroChat">Chat on WhatsApp</a>
         </div>
       </div>
+
+      <div class="hero-visual">
+        <figure class="hero-main">
+          <img src="assets/img/ergo-chair-white.jpg" alt="White ergonomic mesh chair at a black desk in a bright room" width="690" height="863">
+          <figcaption class="spec-tag">
+            <span class="mono">TR-O01</span>
+            <strong>Ergonomic Mesh Chair</strong>
+            <span class="spec-price" id="heroPrice"></span>
+          </figcaption>
+        </figure>
+        <figure class="hero-inset">
+          <img src="assets/img/gaming-setup.jpg" alt="Gaming chair and RGB desk" width="643" height="804">
+        </figure>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <dl class="facts">
+        <div><dt class="mono">Products</dt><dd id="factCount">9</dd></div>
+        <div><dt class="mono">Paid upfront</dt><dd>₦0</dd></div>
+        <div><dt class="mono">Condition</dt><dd>Brand new</dd></div>
+        <div><dt class="mono">Ordering</dt><dd>WhatsApp</dd></div>
+      </dl>
     </div>
   </section>
 
-  <section class="section" id="shop">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">The range</p>
-          <h2>Shop by what you need</h2>
-        </div>
-        <div class="filters" role="tablist" aria-label="Filter products">
-          <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-          <button class="chip" data-filter="gaming" role="tab" aria-selected="false">Gaming</button>
-          <button class="chip" data-filter="office" role="tab" aria-selected="false">Office chairs</button>
-          <button class="chip" data-filter="desks" role="tab" aria-selected="false">Desks</button>
-        </div>
+  <!-- Category index -->
+  <section class="index-section" aria-labelledby="indexTitle">
+    <div class="wrap">
+      <div class="head-row">
+        <h2 id="indexTitle" class="h-section">Shop by <em>category</em></h2>
+        <p class="mono label">04 categories</p>
       </div>
-      <div class="grid" id="productGrid"></div>
+      <ul class="cat-index">
+        <li><a href="#catalogue" data-jump="gaming"><span class="mono">01</span><span class="cat-name">Gaming</span><span class="cat-meta">Chairs &amp; RGB desks</span><span class="cat-arrow" aria-hidden="true">↗</span></a></li>
+        <li><a href="#catalogue" data-jump="office"><span class="mono">02</span><span class="cat-name">Office chairs</span><span class="cat-meta">Mesh &amp; executive</span><span class="cat-arrow" aria-hidden="true">↗</span></a></li>
+        <li><a href="#catalogue" data-jump="desks"><span class="mono">03</span><span class="cat-name">Desks</span><span class="cat-meta">Standing, L-shaped &amp; foldable</span><span class="cat-arrow" aria-hidden="true">↗</span></a></li>
+        <li class="is-soon"><a href="#" id="notifyBtn"><span class="mono">04</span><span class="cat-name">Massage chairs</span><span class="cat-meta">Arriving soon. Tap to get notified</span><span class="cat-arrow" aria-hidden="true">↗</span></a></li>
+      </ul>
     </div>
   </section>
 
-  <section class="section section-alt" id="setups">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Complete setups</p>
-          <h2>Get the desk and chair together</h2>
+  <!-- Catalogue -->
+  <section class="catalogue" id="catalogue">
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h-section">The <em>catalogue</em></h2>
+        <div class="tabs" role="tablist" aria-label="Filter products">
+          <button class="tab is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="tab" data-filter="gaming" role="tab" aria-selected="false">Gaming</button>
+          <button class="tab" data-filter="office" role="tab" aria-selected="false">Office</button>
+          <button class="tab" data-filter="desks" role="tab" aria-selected="false">Desks</button>
         </div>
-        <p class="section-note">One order, one delivery. Both pieces are picked to work with each other.</p>
+      </div>
+      <div class="products" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- Setups -->
+  <section class="setups-section" id="setups">
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h-section">Complete <em>setups</em></h2>
+        <p class="head-note">A desk and chair that work together, delivered in one trip.</p>
       </div>
       <div class="setups" id="setupGrid"></div>
     </div>
   </section>
 
-  <section class="section" id="real">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">What you actually get</p>
-          <h2>Filmed in real rooms</h2>
-        </div>
-        <p class="section-note">No renders, no studio lighting. This is how the furniture looks set up in a normal room.</p>
+  <!-- Real rooms -->
+  <section class="rooms">
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h-section">Shot in <em>real rooms</em></h2>
+        <p class="head-note">No renders and no studio. This is exactly how the furniture looks once it's set up.</p>
       </div>
-      <div class="videos">
+      <div class="reel">
         <figure>
           <video src="assets/video/gaming-setup.mp4" poster="assets/img/gaming-setup-2.jpg" muted loop playsinline preload="none"></video>
-          <figcaption>RGB gaming desk with gaming chair</figcaption>
-        </figure>
-        <figure>
-          <video src="assets/video/gaming-chair.mp4" poster="assets/img/gaming-chair-black.jpg" muted loop playsinline preload="none"></video>
-          <figcaption>Gaming chair with pull-out footrest</figcaption>
+          <figcaption><span class="mono">TR-G01 + TR-G03</span>RGB desk with gaming chair</figcaption>
         </figure>
         <figure>
           <video src="assets/video/standing-desk.mp4" poster="assets/img/standing-desk-black.jpg" muted loop playsinline preload="none"></video>
-          <figcaption>Electric standing desk with ergonomic chair</figcaption>
+          <figcaption><span class="mono">TR-D01 + TR-O01</span>Standing desk with ergonomic chair</figcaption>
+        </figure>
+        <figure>
+          <video src="assets/video/gaming-chair.mp4" poster="assets/img/gaming-chair-black.jpg" muted loop playsinline preload="none"></video>
+          <figcaption><span class="mono">TR-G03</span>Gaming chair with footrest</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="section section-alt" id="how">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">How to order</p>
-          <h2>Simple, and you pay last</h2>
-        </div>
+  <!-- Process -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h-section">How ordering <em>works</em></h2>
+        <p class="mono label">You pay last</p>
       </div>
-      <ol class="steps">
-        <li>
-          <span class="step-num">1</span>
-          <h3>Pick your items</h3>
-          <p>Add what you want to your order. Mix gaming and office pieces if you like.</p>
-        </li>
-        <li>
-          <span class="step-num">2</span>
-          <h3>Send us the order</h3>
-          <p>Your list comes to us in one message, with your name and delivery address.</p>
-        </li>
-        <li>
-          <span class="step-num">3</span>
-          <h3>We confirm the details</h3>
-          <p>We reply with availability, delivery cost and a delivery date before anything is sent.</p>
-        </li>
-        <li>
-          <span class="step-num">4</span>
-          <h3>Pay on delivery</h3>
-          <p>Check your furniture when it arrives, then pay. No money up front.</p>
-        </li>
+      <ol class="timeline">
+        <li><span class="mono">Step 01</span><h3>Choose</h3><p>Add pieces to your order. Mix gaming and office items freely.</p></li>
+        <li><span class="mono">Step 02</span><h3>Send</h3><p>Your list reaches us on WhatsApp with your name and address filled in.</p></li>
+        <li><span class="mono">Step 03</span><h3>Confirm</h3><p>We reply with availability, delivery cost and a date. Nothing moves until you agree.</p></li>
+        <li><span class="mono">Step 04</span><h3>Receive &amp; pay</h3><p>Inspect everything at your door, then pay. No deposit, no transfer upfront.</p></li>
       </ol>
     </div>
   </section>
 
-  <section class="section" id="massage">
-    <div class="container">
-      <div class="soon">
-        <div>
-          <p class="eyebrow">Coming soon</p>
-          <h2>Massage chairs</h2>
-          <p>We're adding massage chairs to the range. Message us and we'll let you know first when they land.</p>
-        </div>
-        <a class="btn btn-ghost" id="notifyBtn" href="#">Tell me when they're in</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-alt" id="faq">
-    <div class="container narrow">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Questions</p>
-          <h2>Before you order</h2>
-        </div>
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="wrap faq-grid">
+      <div>
+        <h2 class="h-section">Good <em>questions</em></h2>
+        <p class="head-note">Anything else, message us. A real person replies.</p>
       </div>
       <div class="faq">
         <details>
           <summary>Do I really pay on delivery?</summary>
-          <p>Yes. You don't pay anything when you place your order. You pay when the furniture reaches you.</p>
+          <p>Yes. Placing an order costs nothing. You pay when the furniture reaches you and you're happy with it.</p>
         </details>
         <details>
           <summary>Are the products new?</summary>
-          <p>Every item is brand new and imported. The photos and videos on this page are of the actual products, not stock images.</p>
+          <p>Every item is brand new and imported. The photos and videos here are of the actual products, not stock images.</p>
         </details>
         <details>
           <summary>How much is delivery, and how long does it take?</summary>
-          <p>It depends on where you are. Once you send your order, we'll confirm the delivery cost and date before anything is dispatched.</p>
+          <p>It depends on your location. After you send your order we confirm the exact cost and date before anything is dispatched.</p>
         </details>
         <details>
           <summary>Does it come assembled?</summary>
-          <p>Some pieces need simple assembly when they arrive. If you want help putting yours together, mention it in your order and we'll let you know what we can arrange in your area.</p>
+          <p>Some pieces need simple assembly. If you'd like help putting yours together, mention it in your order and we'll tell you what we can arrange in your area.</p>
         </details>
         <details>
-          <summary>Can I see more photos or videos first?</summary>
-          <p>Of course. Message us about any item and we'll send more pictures or a video.</p>
+          <summary>Can I see more photos or a video first?</summary>
+          <p>Of course. Message us about any item and we'll send extra pictures or a quick video.</p>
         </details>
       </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="wrap cta-inner">
+      <h2>Not sure what fits your space?</h2>
+      <p>Tell us how you work or play and we'll suggest a setup.</p>
+      <a href="#" class="btn btn-ink" id="ctaChat">Ask us on WhatsApp <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
 </main>
 
-<footer class="site-footer" id="contact">
-  <div class="container footer-grid">
-    <div>
-      <a href="#top" class="logo" aria-label="TekRest home">
-        <span class="logo-mark" aria-hidden="true"></span>
-        <span>Tek<b>Rest</b></span>
-      </a>
-      <p class="footer-line">Chairs and desks for gamers, remote workers and anyone who spends their day at a screen.</p>
+<footer class="footer">
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <span class="brand-word big">TekRest</span>
+      <p>Seating and desks for gamers, remote workers and anyone who spends the day at a screen.</p>
     </div>
     <div>
-      <h4>Talk to us</h4>
+      <p class="mono label">Contact</p>
       <ul class="footer-links" id="contactLinks"></ul>
     </div>
     <div>
-      <h4>Shop</h4>
+      <p class="mono label">Catalogue</p>
       <ul class="footer-links">
-        <li><a href="#shop" data-jump="gaming">Gaming</a></li>
-        <li><a href="#shop" data-jump="office">Office chairs</a></li>
-        <li><a href="#shop" data-jump="desks">Desks</a></li>
+        <li><a href="#catalogue" data-jump="gaming">Gaming</a></li>
+        <li><a href="#catalogue" data-jump="office">Office chairs</a></li>
+        <li><a href="#catalogue" data-jump="desks">Desks</a></li>
         <li><a href="#setups">Setups</a></li>
       </ul>
     </div>
   </div>
-  <div class="container footer-base">
+  <div class="wrap footer-base mono">
     <span>© <span id="year"></span> TekRest</span>
-    <span>Pay on delivery</span>
+    <span>Pay on delivery · Nigeria</span>
   </div>
 </footer>
 
+<a class="wa-float" id="waFloat" href="#" aria-label="Chat with TekRest on WhatsApp">
+  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>
+</a>
+
 <!-- Order drawer -->
-<div class="drawer-backdrop" id="backdrop" hidden></div>
+<div class="backdrop" id="backdrop" hidden></div>
 <aside class="drawer" id="drawer" aria-label="Your order" aria-hidden="true">
   <div class="drawer-head">
-    <h3>Your order</h3>
-    <button class="icon-btn" id="cartClose" aria-label="Close">
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
+    <div>
+      <p class="mono label">Order summary</p>
+      <h3>Your order</h3>
+    </div>
+    <button class="close-btn" id="cartClose" aria-label="Close">✕</button>
   </div>
   <div class="drawer-body">
-    <ul class="cart-list" id="cartList"></ul>
-    <p class="cart-empty" id="cartEmpty">Nothing here yet. Add a chair or desk to get started.</p>
+    <ul class="lines" id="cartList"></ul>
+    <p class="empty" id="cartEmpty">Your order is empty. Add a chair, desk or full setup to begin.</p>
     <form class="order-form" id="orderForm" novalidate>
-      <label>Your name<input name="name" autocomplete="name" required></label>
+      <p class="mono label">Delivery details</p>
+      <label>Full name<input name="name" autocomplete="name" required></label>
       <label>Phone number<input name="phone" type="tel" autocomplete="tel" required></label>
       <label>Delivery address<textarea name="address" rows="2" autocomplete="street-address" required></textarea></label>
-      <label>Anything else? <span class="muted">(optional)</span><textarea name="note" rows="2" placeholder="Colour preference, assembly help, best time to deliver…"></textarea></label>
+      <label>Notes <span class="optional">optional</span><textarea name="note" rows="2" placeholder="Colour, assembly help, best delivery time"></textarea></label>
     </form>
   </div>
   <div class="drawer-foot">
-    <div class="total-row"><span>Subtotal</span><strong id="cartTotal">₦0</strong></div>
-    <p class="muted small">Delivery cost is confirmed after you send your order. You pay on delivery.</p>
-    <button class="btn btn-primary btn-block" id="sendOrder" disabled>Send order</button>
+    <div class="sum"><span>Subtotal</span><strong id="cartTotal">₦0</strong></div>
+    <p class="fine">Delivery is quoted after you send the order. Payment on delivery.</p>
+    <button class="btn btn-signal btn-block" id="sendOrder" disabled>Send order</button>
   </div>
 </aside>
 

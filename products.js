@@ -17,6 +17,7 @@ const STORE = {
 const PRODUCTS = [
   {
     id: "gaming-desk-rgb",
+    code: "TR-G01",
     name: "RGB Gaming Desk",
     category: "gaming",
     price: 210000,
@@ -27,6 +28,7 @@ const PRODUCTS = [
   },
   {
     id: "gaming-chair-white",
+    code: "TR-G02",
     name: "Gaming Chair, Black & White",
     category: "gaming",
     price: 260000,
@@ -37,6 +39,7 @@ const PRODUCTS = [
   },
   {
     id: "gaming-chair-black",
+    code: "TR-G03",
     name: "Gaming Chair with Footrest",
     category: "gaming",
     price: 260000,
@@ -47,6 +50,7 @@ const PRODUCTS = [
   },
   {
     id: "standing-desk",
+    code: "TR-D01",
     name: "Electric Standing Desk",
     category: "desks",
     price: 315000,
@@ -57,6 +61,7 @@ const PRODUCTS = [
   },
   {
     id: "l-desk",
+    code: "TR-D02",
     name: "L-Shaped Electric Standing Desk",
     category: "desks",
     price: 365000,
@@ -67,6 +72,7 @@ const PRODUCTS = [
   },
   {
     id: "ergo-chair-white",
+    code: "TR-O01",
     name: "Ergonomic Mesh Chair, White Frame",
     category: "office",
     price: 235000,
@@ -77,6 +83,7 @@ const PRODUCTS = [
   },
   {
     id: "executive-chair",
+    code: "TR-O02",
     name: "Executive Swivel Chair",
     category: "office",
     price: 290000,
@@ -87,6 +94,7 @@ const PRODUCTS = [
   },
   {
     id: "mesh-chair-black",
+    code: "TR-O03",
     name: "Ergonomic Mesh Chair, Black",
     category: "office",
     price: 200000,
@@ -97,6 +105,7 @@ const PRODUCTS = [
   },
   {
     id: "foldable-table",
+    code: "TR-D03",
     name: "Foldable Office Table",
     category: "desks",
     price: 275000,
