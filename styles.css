@@ -149,6 +149,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .product-title { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
 .product-title h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 .product-title .price { font-family: var(--mono); font-size: 15px; white-space: nowrap; }
+.free-note { color: var(--signal); font-size: 11px; margin-top: -6px; }
 .product-info > p { color: var(--stone); font-size: 14.5px; }
 .specs { list-style: none; margin: 4px 0 0; padding: 0; border-top: 1px solid var(--rule); }
 .specs li { display: flex; gap: 10px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--rule); font-size: 13.5px; }
@@ -270,6 +271,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .sum { display: flex; justify-content: space-between; align-items: baseline; }
 .sum strong { font-family: var(--mono); font-size: 22px; font-weight: 500; }
 .fine { color: var(--stone); font-size: 13px; }
+.sum-line { font-size: 14px; color: var(--stone); }
+.free { font-family: var(--mono); font-size: 13px; color: var(--signal); text-transform: uppercase; letter-spacing: 0.04em; }
 
 .toast {
   position: fixed; left: 50%; bottom: 26px; z-index: 60; transform: translate(-50%, 16px); opacity: 0;

@@ -46,6 +46,7 @@
               <h3>${p.name}</h3>
               <span class="price">${money(p.price)}</span>
             </div>
+            <span class="mono free-note">Free delivery</span>
             <p>${p.blurb}</p>
             <ul class="specs">${p.features.map((f, i) => `<li><span class="mono">0${i + 1}</span>${f}</li>`).join("")}</ul>
             <button class="btn btn-ink btn-block add-mobile" data-add="${p.id}">Add to order</button>
@@ -134,14 +135,14 @@
       "",
       ...lines,
       "",
-      `Subtotal: ${money(cartTotal())}`,
+      `Total: ${money(cartTotal())} (free delivery)`,
       "",
       `Name: ${form.name.value.trim()}`,
       `Phone: ${form.phone.value.trim()}`,
       `Delivery address: ${form.address.value.trim()}`,
       note ? `Note: ${note}` : null,
       "",
-      "Please confirm delivery cost and date. I'll pay on delivery.",
+      "Please confirm the delivery date. I'll pay on delivery.",
     ].filter((x) => x !== null).join("\n");
   }
 
