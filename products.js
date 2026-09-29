@@ -28,7 +28,7 @@ const PRODUCTS = [
     features: ["Three frame styles: X, T or Z", "RGB lighting with remote", "Headphone hook and cup holder"],
     // Frame styles. The customer's choice is included in their order.
     variants: [
-      { id: "x-frame", label: "X-frame", image: "assets/img/gaming-desk-rgb.jpg",
+      { id: "x-frame", label: "X-frame", image: "assets/img/gaming-desk-rgb.jpg", studio: true,
         alt: "Black gaming desk with RGB edge lighting and X-shaped legs" },
       { id: "t-frame", label: "T-frame", image: "assets/img/gaming-desk-tframe.jpg", studio: true,
         alt: "Carbon-fibre gaming desk with RGB edge lighting and T-shaped legs",
