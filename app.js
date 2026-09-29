@@ -75,6 +75,7 @@
           <p>${s.blurb}</p>
           <ul class="equation">
             ${s.items.map((id) => `<li><span>${byId[id].name}</span><span>${money(byId[id].price)}</span></li>`).join("")}
+            <li><span>Delivery</span><span class="free">Free</span></li>
             <li class="total"><span>Together</span><span>${money(setupPrice(s))}</span></li>
           </ul>
           <button class="btn btn-signal" data-setup="${s.id}">Add the setup <span aria-hidden="true">→</span></button>
