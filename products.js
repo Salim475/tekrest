@@ -24,8 +24,19 @@ const PRODUCTS = [
     price: 199000,
     image: "assets/img/gaming-desk-rgb.jpg",
     alt: "Black gaming desk with RGB edge lighting and X-shaped legs",
-    blurb: "Carbon-texture top with RGB edge lighting that changes colour by remote.",
-    features: ["RGB lighting with remote", "Headphone hook and cup holder", "Cable holes on the desktop"],
+    blurb: "Carbon-texture top with RGB edge lighting. Pick the frame style that suits your room.",
+    features: ["Three frame styles: X, T or Z", "RGB lighting with remote", "Headphone hook and cup holder"],
+    // Frame styles. The customer's choice is included in their order.
+    variants: [
+      { id: "x-frame", label: "X-frame", image: "assets/img/gaming-desk-rgb.jpg",
+        alt: "Black gaming desk with RGB edge lighting and X-shaped legs" },
+      { id: "t-frame", label: "T-frame", image: "assets/img/gaming-desk-tframe.jpg", studio: true,
+        alt: "Carbon-fibre gaming desk with RGB edge lighting and T-shaped legs",
+        note: "Carbon-fibre top with an RGB light bar" },
+      { id: "z-frame", label: "Z-frame", image: "assets/img/gaming-desk-zframe.jpg", studio: true,
+        alt: "Z-frame gaming desk with measurements: 115 cm wide, 70 cm deep, 76 cm high",
+        note: "115 × 70 × 76 cm (W × D × H)" },
+    ],
   },
   {
     id: "gaming-chair-white",

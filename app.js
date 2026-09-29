@@ -7,9 +7,18 @@
   const separatePrice = (s) => s.items.reduce((sum, id) => sum + byId[id].price, 0);
   const setupPrice = (s) => s.price ?? separatePrice(s);
   const setupSaving = (s) => separatePrice(s) - setupPrice(s);
-  const quickOrderUrl = (p) => contactUrl(
-    `Hello ${STORE.name}, I'd like to order the ${p.name} [${p.code}] for ${money(p.price)}. Is it available?`,
-    `Order: ${p.name}`);
+  const quickOrderUrl = (p) => {
+    const it = item(keyFor(p));
+    return contactUrl(
+      `Hello ${STORE.name}, I'd like to order the ${it.name} [${p.code}] for ${money(p.price)}. Is it available?`,
+      `Order: ${it.name}`);
+  };
+
+  // ---------- Product styles (variants) ----------
+  const chosen = {};
+  const variantOf = (p) => p.variants && (p.variants.find((v) => v.id === chosen[p.id]) || p.variants[0]);
+  // Cart key: "product" or "product::style" for products that come in styles.
+  const keyFor = (p) => (p.variants ? `${p.id}::${variantOf(p).id}` : p.id);
 
   // ---------- Cart state ----------
   const CART_KEY = "tekrest-cart";
@@ -18,6 +27,12 @@
   const setupById = Object.fromEntries(SETUPS.map((x) => [x.id, x]));
   // A cart line is either a single product or a whole setup (charged at the setup price).
   const item = (id) => {
+    const [pid, vid] = id.split("::");
+    if (byId[pid] && vid) {
+      const p = byId[pid];
+      const v = (p.variants || []).find((x) => x.id === vid);
+      return v && { ...p, name: `${p.name} (${v.label})`, image: v.image };
+    }
     if (byId[id]) return byId[id];
     const x = setupById[id];
     return x && { name: x.name, code: x.items.map((i) => byId[i].code).join(" + "), price: setupPrice(x), image: x.image };
@@ -44,16 +59,36 @@
   const cartTotal = () => cart.reduce((sum, l) => sum + item(l.id).price * l.qty, 0);
 
   // ---------- Catalogue ----------
-  function renderProducts(filter = "all") {
+  let currentFilter = "all";
+
+  function variantPicker(p) {
+    if (!p.variants) return "";
+    const v = variantOf(p);
+    return `
+      <div class="variants" role="radiogroup" aria-label="Frame style">
+        ${p.variants.map((x) => `
+          <button class="variant" role="radio" aria-checked="${x.id === v.id}" data-variant="${p.id}|${x.id}">
+            <img src="${x.image}" alt="" class="${x.studio ? "studio" : ""}">${x.label}
+          </button>`).join("")}
+      </div>
+      ${v.note ? `<p class="variant-note mono">${v.note}</p>` : ""}`;
+  }
+
+  function renderProducts(filter = currentFilter) {
+    currentFilter = filter;
     $("#productGrid").innerHTML = PRODUCTS.filter((p) => filter === "all" || p.category === filter)
-      .map((p) => `
+      .map((p) => {
+        const v = variantOf(p);
+        const img = v || p;
+        return `
         <article class="product">
-          <div class="product-media">
-            <img src="${p.image}" alt="${p.alt}" loading="lazy">
+          <div class="product-media${v && v.studio ? " studio" : ""}">
+            <img src="${img.image}" alt="${img.alt}" loading="lazy">
             <span class="product-code mono">${p.code}</span>
             ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ""}
-            <button class="quick-add" data-add="${p.id}">Add to order</button>
+            <button class="quick-add" data-add="${keyFor(p)}">Add to order</button>
           </div>
+          ${variantPicker(p)}
           <div class="product-info">
             <div class="product-title">
               <h3>${p.name}</h3>
@@ -63,11 +98,12 @@
             <p>${p.blurb}</p>
             <ul class="specs">${p.features.map((f, i) => `<li><span class="mono">0${i + 1}</span>${f}</li>`).join("")}</ul>
             <div class="card-actions">
-              <button class="btn btn-ink add-mobile" data-add="${p.id}">Add to order</button>
+              <button class="btn btn-ink add-mobile" data-add="${keyFor(p)}">Add to order</button>
               <a class="wa-link" href="${quickOrderUrl(p)}" target="_blank" rel="noopener">Order on WhatsApp <span aria-hidden="true">↗</span></a>
             </div>
           </div>
-        </article>`)
+        </article>`;
+      })
       .join("");
   }
 
@@ -258,6 +294,15 @@
     if (q) {
       const line = cart.find((l) => l.id === q.dataset.qty);
       setQty(q.dataset.qty, line.qty + Number(q.dataset.delta));
+      return;
+    }
+    const variant = e.target.closest("[data-variant]");
+    if (variant) {
+      const [pid, vid] = variant.dataset.variant.split("|");
+      chosen[pid] = vid;
+      renderProducts();
+      const again = $(`[data-variant="${pid}|${vid}"]`);
+      if (again) again.focus();
       return;
     }
     const tab = e.target.closest(".tab");
