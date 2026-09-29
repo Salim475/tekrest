@@ -4,13 +4,25 @@
   const byId = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
 
   const money = (n) => STORE.currency + Number(n).toLocaleString("en-NG");
-  const setupPrice = (s) => s.price ?? s.items.reduce((sum, id) => sum + byId[id].price, 0);
+  const separatePrice = (s) => s.items.reduce((sum, id) => sum + byId[id].price, 0);
+  const setupPrice = (s) => s.price ?? separatePrice(s);
+  const setupSaving = (s) => separatePrice(s) - setupPrice(s);
+  const quickOrderUrl = (p) => contactUrl(
+    `Hello ${STORE.name}, I'd like to order the ${p.name} [${p.code}] for ${money(p.price)}. Is it available?`,
+    `Order: ${p.name}`);
 
   // ---------- Cart state ----------
   const CART_KEY = "tekrest-cart";
   let cart = [];
   try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (e) { cart = []; }
-  cart = cart.filter((line) => byId[line.id]);
+  const setupById = Object.fromEntries(SETUPS.map((x) => [x.id, x]));
+  // A cart line is either a single product or a whole setup (charged at the setup price).
+  const item = (id) => {
+    if (byId[id]) return byId[id];
+    const x = setupById[id];
+    return x && { name: x.name, code: x.items.map((i) => byId[i].code).join(" + "), price: setupPrice(x), image: x.image };
+  };
+  cart = cart.filter((line) => item(line.id));
 
   function saveCart() {
     try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) { /* storage unavailable */ }
@@ -29,7 +41,7 @@
     renderCart();
   }
 
-  const cartTotal = () => cart.reduce((sum, l) => sum + byId[l.id].price * l.qty, 0);
+  const cartTotal = () => cart.reduce((sum, l) => sum + item(l.id).price * l.qty, 0);
 
   // ---------- Catalogue ----------
   function renderProducts(filter = "all") {
@@ -39,6 +51,7 @@
           <div class="product-media">
             <img src="${p.image}" alt="${p.alt}" loading="lazy">
             <span class="product-code mono">${p.code}</span>
+            ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ""}
             <button class="quick-add" data-add="${p.id}">Add to order</button>
           </div>
           <div class="product-info">
@@ -49,7 +62,10 @@
             <span class="mono free-note">Free delivery</span>
             <p>${p.blurb}</p>
             <ul class="specs">${p.features.map((f, i) => `<li><span class="mono">0${i + 1}</span>${f}</li>`).join("")}</ul>
-            <button class="btn btn-ink btn-block add-mobile" data-add="${p.id}">Add to order</button>
+            <div class="card-actions">
+              <button class="btn btn-ink add-mobile" data-add="${p.id}">Add to order</button>
+              <a class="wa-link" href="${quickOrderUrl(p)}" target="_blank" rel="noopener">Order on WhatsApp <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </article>`)
       .join("");
@@ -76,9 +92,13 @@
           <ul class="equation">
             ${s.items.map((id) => `<li><span>${byId[id].name}</span><span>${money(byId[id].price)}</span></li>`).join("")}
             <li><span>Delivery</span><span class="free">Free</span></li>
-            <li class="total"><span>Together</span><span>${money(setupPrice(s))}</span></li>
+            ${setupSaving(s) > 0 ? `<li><span>Bought separately</span><span class="was">${money(separatePrice(s))}</span></li>` : ""}
+            <li class="total"><span>Setup price</span><span>${money(setupPrice(s))}</span></li>
           </ul>
-          <button class="btn btn-signal" data-setup="${s.id}">Add the setup <span aria-hidden="true">→</span></button>
+          <div class="setup-cta">
+            <button class="btn btn-signal" data-setup="${s.id}">Add the setup <span aria-hidden="true">→</span></button>
+            ${setupSaving(s) > 0 ? `<span class="save-pill">You save ${money(setupSaving(s))}</span>` : ""}
+          </div>
         </div>
       </article>`).join("");
   }
@@ -109,7 +129,7 @@
     $("#cartTotal").textContent = money(cartTotal());
     $("#sendOrder").textContent = STORE.whatsapp ? "Send order on WhatsApp" : "Send order by email";
     $("#cartList").innerHTML = cart.map((l) => {
-      const p = byId[l.id];
+      const p = item(l.id);
       return `
         <li class="line">
           <img src="${p.image}" alt="">
@@ -129,7 +149,7 @@
 
   // ---------- Sending the order ----------
   function buildMessage(form) {
-    const lines = cart.map((l) => `- ${l.qty} x ${byId[l.id].name} [${byId[l.id].code}] (${money(byId[l.id].price * l.qty)})`);
+    const lines = cart.map((l) => `- ${l.qty} x ${item(l.id).name} [${item(l.id).code}] (${money(item(l.id).price * l.qty)})`);
     const note = form.note.value.trim();
     return [
       `Hello ${STORE.name}, I'd like to order:`,
@@ -189,6 +209,11 @@
       a.target = "_blank";
       a.rel = "noopener";
     });
+    const office = $("#officeChat");
+    office.href = contactUrl("Hello TekRest, I'd like a quote for office furniture.\nNumber of people: \nItems needed: \nLocation: ", "Office quote request");
+    office.target = "_blank";
+    office.rel = "noopener";
+
     const notify = $("#notifyBtn");
     notify.href = contactUrl("Hi TekRest, please let me know when massage chairs are available.", "Massage chairs");
     notify.target = "_blank";
@@ -219,13 +244,13 @@
       add.textContent = "Added ✓";
       add.classList.add("added");
       setTimeout(() => { add.textContent = label; add.classList.remove("added"); }, 1400);
-      toast(`${byId[add.dataset.add].name} added to your order`);
+      toast(`${item(add.dataset.add).name} added to your order`);
       return;
     }
     const setup = e.target.closest("[data-setup]");
     if (setup) {
-      const s = SETUPS.find((x) => x.id === setup.dataset.setup);
-      s.items.forEach((id) => addToCart(id));
+      const s = setupById[setup.dataset.setup];
+      addToCart(s.id);
       toast(`${s.name} added to your order`);
       return;
     }
